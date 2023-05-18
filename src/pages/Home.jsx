@@ -6,6 +6,7 @@ import LoginContext from '../context/LoginContext';
 import HomeContext from '../context/HomeContext';
 import Leagues from '../components/Leagues';
 import Seasons from '../components/Seasons';
+import Teams from '../components/Teams';
 
 function Home() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Home() {
     );
   }
   if (toRender === 'leagues') return (<Leagues />);
+  if (toRender === 'teams') return (<Teams />);
 }
 
 export default Home;

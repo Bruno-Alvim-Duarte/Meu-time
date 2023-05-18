@@ -7,17 +7,20 @@ export default function HomeProvider({ children }) {
   const [countryOrSeasonSelected, setCountryOrSeasonSelected] = useState('');
   const [typeSelected, setTypeSelected] = useState('');
   const [leagueSelected, setLeagueSelected] = useState('');
+  const [teamSelected, setTeamSelected] = useState('');
 
   const values = useMemo(() => ({
     toRender,
     countryOrSeasonSelected,
     typeSelected,
     leagueSelected,
+    teamSelected,
+    setTeamSelected,
     setLeagueSelected,
     setTypeSelected,
     setCountryOrSeasonSelected,
     setToRender,
-  }), [toRender, countryOrSeasonSelected, typeSelected, leagueSelected]);
+  }), [toRender, countryOrSeasonSelected, typeSelected, leagueSelected, teamSelected]);
   return (
     <HomeContext.Provider value={ values }>
       {children}

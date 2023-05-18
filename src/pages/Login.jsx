@@ -28,7 +28,7 @@ function Login() {
             text: 'Chave inválida',
           });
         }
-        login();
+        login(key);
         navigate('/home');
       })
       .catch((error) => console.log('error', error));

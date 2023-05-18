@@ -8,16 +8,14 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useContext(LoginContext);
 
+  const myHeaders = new Headers();
+  myHeaders.append('x-rapidapi-key', key);
+
+  const requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+  };
   const handleSubmit = () => {
-    const myHeaders = new Headers();
-    myHeaders.append('x-rapidapi-key', key);
-
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
-
     fetch('https://v3.football.api-sports.io/status', requestOptions)
       .then((response) => response.json())
       .then((result) => {

@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import Countries from '../components/Countries';
 import LoginContext from '../context/LoginContext';
 import HomeContext from '../context/HomeContext';
+import Leagues from '../components/Leagues';
 
 function Home() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function Home() {
   const { toRender } = useContext(HomeContext);
 
   if (toRender === 'countries') return (<Countries />);
+  if (toRender === 'leagues') return (<Leagues />);
 }
 
 export default Home;

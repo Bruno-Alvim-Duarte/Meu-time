@@ -24,13 +24,23 @@ function Leagues() {
       });
     // setLeaguesInfo(leagues.response);
   }, [key, countryOrSeasonSelected, typeSelected]);
+
+  const { setToRender, setLeagueSelected } = useContext(HomeContext);
+  const handleClickLeague = (league) => {
+    setToRender('teams');
+    setLeagueSelected(league);
+  };
+
   return (
     <div>
       {leaguesInfo.map((leagueInfo) => (
-        <div key={ leagueInfo.league.id }>
+        <button
+          key={ leagueInfo.league.id }
+          onClick={ () => handleClickLeague(leagueInfo.league.name) }
+        >
           <img src={ leagueInfo.league.logo } alt={ leagueInfo.league.name } />
           <p>{leagueInfo.league.name}</p>
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -6,7 +6,7 @@ import HomeContext from '../context/HomeContext';
 function Teams() {
   const [teamsInfo, setTeamsInfo] = useState([]);
   const { key } = useContext(LoginContext);
-  const { typeSelected, countryOrSeasonSelected,
+  const { leagueSelected,
     setToRender, setTeamSelected } = useContext(HomeContext);
 
   useEffect(() => {
@@ -18,18 +18,18 @@ function Teams() {
       headers: myHeaders,
     };
 
-    fetch(`https://v3.football.api-sports.io/teams?${typeSelected}=${countryOrSeasonSelected}`, requestOptions)
+    fetch(`https://v3.football.api-sports.io/teams?league=${leagueSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result.response);
         setTeamsInfo(result.response);
       });
     // setTeamsInfo(teamsMock.response);
-  }, [key, typeSelected, countryOrSeasonSelected]);
+  }, [key, leagueSelected]);
 
-  const handleClickTeam = (team) => {
+  const handleClickTeam = (teamId) => {
     setToRender('team-details');
-    setTeamSelected(team);
+    setTeamSelected(teamId);
   };
 
   return (
@@ -37,7 +37,7 @@ function Teams() {
       {teamsInfo.map((teamInfo) => (
         <button
           key={ teamInfo.team.id }
-          onClick={ () => handleClickTeam(teamInfo.team.name) }
+          onClick={ () => handleClickTeam(teamInfo.team.id) }
         >
           <img src={ teamInfo.team.logo } alt={ teamInfo.team.name } />
           <p>{teamInfo.team.name}</p>

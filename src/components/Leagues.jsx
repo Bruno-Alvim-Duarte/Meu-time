@@ -26,9 +26,9 @@ function Leagues() {
   }, [key, countryOrSeasonSelected, typeSelected]);
 
   const { setToRender, setLeagueSelected } = useContext(HomeContext);
-  const handleClickLeague = (league) => {
+  const handleClickLeague = (leagueId) => {
     setToRender('teams');
-    setLeagueSelected(league);
+    setLeagueSelected(leagueId);
   };
 
   return (
@@ -36,7 +36,7 @@ function Leagues() {
       {leaguesInfo.map((leagueInfo) => (
         <button
           key={ leagueInfo.league.id }
-          onClick={ () => handleClickLeague(leagueInfo.league.name) }
+          onClick={ () => handleClickLeague(leagueInfo.league.id) }
         >
           <img src={ leagueInfo.league.logo } alt={ leagueInfo.league.name } />
           <p>{leagueInfo.league.name}</p>

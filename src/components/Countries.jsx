@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import LoginContext from '../context/LoginContext';
+import HomeContext from '../context/HomeContext';
 
 function Countries() {
   const [countries, setCountries] = useState([]);
@@ -20,15 +21,19 @@ function Countries() {
       });
   }, [key]);
 
-  console.log(countries);
+  const { setToRender, setCountrySelected } = useContext(HomeContext);
+  const handleClickCountry = (country) => {
+    setToRender('leagues');
+    setCountrySelected(country);
+  };
 
   return (
     <div>
       {countries.map((country) => (
-        <div key={ country.name }>
+        <button key={ country.name } onClick={ () => handleClickCountry(country.name) }>
           <img src={ country.flag } alt={ country.name } />
           <p>{country.name}</p>
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Countries from '../components/Countries';
 import LoginContext from '../context/LoginContext';
+import HomeContext from '../context/HomeContext';
 
 function Home() {
   const navigate = useNavigate();
@@ -21,11 +22,9 @@ function Home() {
     }
   }, [isLoggedIn, navigate]);
 
-  return (
-    <div>
-      <Countries />
-    </div>
-  );
+  const { toRender } = useContext(HomeContext);
+
+  if (toRender === 'countries') return (<Countries />);
 }
 
 export default Home;

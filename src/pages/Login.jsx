@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import LoginContext from '../context/LoginContext';
 
 function Login() {
   const [key, setKey] = useState('');
   const navigate = useNavigate();
+  const { login } = useContext(LoginContext);
 
   const handleSubmit = () => {
     const myHeaders = new Headers();
-    // myHeaders.append('Content-Type', 'application/json');
-    // myHeaders.append('Accept', 'application/json');
-    // myHeaders.append('mode', 'no-cors');
     myHeaders.append('x-rapidapi-key', key);
-    // myHeaders.append('Access-Control-Allow-Origin', '*');
-    // myHeaders.append(
-    //   'Access-Control-Allow-Headers',
-    //   'Access-Control-Allow-Headers, Content-Type, x-rapidapi-key, mode, Accept',
-    // );
 
     const requestOptions = {
       method: 'GET',
@@ -34,6 +28,7 @@ function Login() {
             text: 'Chave inválida',
           });
         }
+        login();
         navigate('/home');
       })
       .catch((error) => console.log('error', error));

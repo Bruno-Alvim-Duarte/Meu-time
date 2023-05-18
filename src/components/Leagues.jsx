@@ -1,10 +1,12 @@
+// falta o useContext
 import React, { useContext, useEffect, useState } from 'react';
 import HomeContext from '../context/HomeContext';
 import LoginContext from '../context/LoginContext';
+// import leagues from '../mocks/leagues';
 
 function Leagues() {
   const [leaguesInfo, setLeaguesInfo] = useState([]);
-  const { countrySelected } = useContext(HomeContext);
+  const { countryOrSeasonSelected, typeSelected } = useContext(HomeContext);
   const { key } = useContext(LoginContext);
   useEffect(() => {
     const myHeaders = new Headers();
@@ -14,13 +16,14 @@ function Leagues() {
       method: 'GET',
       headers: myHeaders,
     };
-    fetch(`https://v3.football.api-sports.io/leagues?country=${countrySelected}`, requestOptions)
+    fetch(`https://v3.football.api-sports.io/leagues?${typeSelected}=${countryOrSeasonSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result.response);
         setLeaguesInfo(result.response);
       });
-  }, [countrySelected, key]);
+    // setLeaguesInfo(leagues.response);
+  }, [key, countryOrSeasonSelected, typeSelected]);
   return (
     <div>
       {leaguesInfo.map((leagueInfo) => (

@@ -4,14 +4,17 @@ import HomeContext from './HomeContext';
 
 export default function HomeProvider({ children }) {
   const [toRender, setToRender] = useState('countries');
-  const [countrySelected, setCountrySelected] = useState('');
+  const [countryOrSeasonSelected, setCountryOrSeasonSelected] = useState('');
+  const [typeSelected, setTypeSelected] = useState('');
 
   const values = useMemo(() => ({
     toRender,
-    countrySelected,
-    setCountrySelected,
+    countryOrSeasonSelected,
+    typeSelected,
+    setTypeSelected,
+    setCountryOrSeasonSelected,
     setToRender,
-  }), [toRender, countrySelected]);
+  }), [toRender, countryOrSeasonSelected, typeSelected]);
   return (
     <HomeContext.Provider value={ values }>
       {children}

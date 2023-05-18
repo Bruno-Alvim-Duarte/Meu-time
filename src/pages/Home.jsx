@@ -5,6 +5,7 @@ import Countries from '../components/Countries';
 import LoginContext from '../context/LoginContext';
 import HomeContext from '../context/HomeContext';
 import Leagues from '../components/Leagues';
+import Seasons from '../components/Seasons';
 
 function Home() {
   const navigate = useNavigate();
@@ -25,7 +26,14 @@ function Home() {
 
   const { toRender } = useContext(HomeContext);
 
-  if (toRender === 'countries') return (<Countries />);
+  if (toRender === 'countries') {
+    return (
+      <div>
+        <Countries />
+        <Seasons />
+      </div>
+    );
+  }
   if (toRender === 'leagues') return (<Leagues />);
 }
 

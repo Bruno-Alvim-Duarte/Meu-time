@@ -30,6 +30,8 @@ function Login() {
         navigate('/home');
       })
       .catch((error) => console.log('error', error));
+    // login(key);
+    // navigate('/home');
   };
 
   return (

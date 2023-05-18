@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import LoginContext from '../context/LoginContext';
 import HomeContext from '../context/HomeContext';
+// import countriesMock from '../mocks/countries';
 
 function Countries() {
   const [countries, setCountries] = useState([]);
@@ -19,12 +20,15 @@ function Countries() {
         console.log(result.response);
         setCountries(result.response);
       });
+    // setCountries(countriesMock.response);
   }, [key]);
 
-  const { setToRender, setCountrySelected } = useContext(HomeContext);
+  const { setToRender,
+    setTypeSelected, setCountryOrSeasonSelected } = useContext(HomeContext);
   const handleClickCountry = (country) => {
     setToRender('leagues');
-    setCountrySelected(country);
+    setCountryOrSeasonSelected(country);
+    setTypeSelected('country');
   };
 
   return (

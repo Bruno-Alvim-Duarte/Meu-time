@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import LoginContext from '../context/LoginContext';
-import HomeContext from '../context/HomeContext';
+import React, { useContext, useState, useEffect } from 'react';
+import LoginContext from '../../context/LoginContext';
+import HomeContext from '../../context/HomeContext';
 
 function Players() {
   const [playersInfo, setPlayersInfo] = useState([]);
   const { key } = useContext(LoginContext);
-  const { teamSelected } = useContext(HomeContext);
+  const { teamSelected, seasonSelected } = useContext(HomeContext);
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -16,12 +16,13 @@ function Players() {
       headers: myHeaders,
     };
 
-    fetch(`https://v3.football.api-sports.io/player?team=${teamSelected}`, requestOptions)
+    fetch(`https://v3.football.api-sports.io/players?team=${teamSelected}&season=${seasonSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        console.log(result.response);
         setPlayersInfo(result.response);
       });
-  }, [key, teamSelected]);
+  }, [key, teamSelected, seasonSelected]);
 
   return (
     <div>

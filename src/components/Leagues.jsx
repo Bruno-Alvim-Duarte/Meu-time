@@ -6,7 +6,7 @@ import LoginContext from '../context/LoginContext';
 
 function Leagues() {
   const [leaguesInfo, setLeaguesInfo] = useState([]);
-  const { countryOrSeasonSelected, typeSelected } = useContext(HomeContext);
+  const { countrySelected, seasonSelected } = useContext(HomeContext);
   const { key } = useContext(LoginContext);
   useEffect(() => {
     const myHeaders = new Headers();
@@ -16,17 +16,19 @@ function Leagues() {
       method: 'GET',
       headers: myHeaders,
     };
-    fetch(`https://v3.football.api-sports.io/leagues?${typeSelected}=${countryOrSeasonSelected}`, requestOptions)
+    console.log(countrySelected, seasonSelected);
+    fetch(`https://v3.football.api-sports.io/leagues?country=${countrySelected}&season=${seasonSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result.response);
         setLeaguesInfo(result.response);
       });
     // setLeaguesInfo(leagues.response);
-  }, [key, countryOrSeasonSelected, typeSelected]);
+  }, [key, countrySelected, seasonSelected]);
 
   const { setToRender, setLeagueSelected } = useContext(HomeContext);
   const handleClickLeague = (leagueId) => {
+    console.log(leagueId);
     setToRender('teams');
     setLeagueSelected(leagueId);
   };

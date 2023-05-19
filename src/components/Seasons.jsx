@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 // import seasonsMock from '../mocks/seasons';
-import HomeContext from '../context/HomeContext';
 import LoginContext from '../context/LoginContext';
 
-function Seasons() {
+function Seasons(props) {
   const [seasons, setSeasons] = useState([]);
   const { key } = useContext(LoginContext);
   useEffect(() => {
@@ -23,12 +23,9 @@ function Seasons() {
     // setSeasons(seasonsMock.response);
   }, [key]);
 
-  const { setToRender,
-    setTypeSelected, setCountryOrSeasonSelected } = useContext(HomeContext);
   const handleClickSeason = (season) => {
-    setToRender('leagues');
-    setCountryOrSeasonSelected(season);
-    setTypeSelected('season');
+    const { setSeasonState } = props;
+    setSeasonState(season);
   };
   return (
     <div>
@@ -40,5 +37,9 @@ function Seasons() {
     </div>
   );
 }
+
+Seasons.propTypes = {
+  setSeasonState: PropTypes.func.isRequired,
+};
 
 export default Seasons;

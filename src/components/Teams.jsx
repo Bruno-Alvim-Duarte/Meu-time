@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import LoginContext from '../context/LoginContext';
+import LoginContext from '../context/LoginContext';
 // import teamsMock from '../mocks/teams';
 import HomeContext from '../context/HomeContext';
 
 function Teams() {
   const [teamsInfo, setTeamsInfo] = useState([]);
   const { key } = useContext(LoginContext);
-  const { leagueSelected,
+  const { leagueSelected, seasonSelected,
     setToRender, setTeamSelected } = useContext(HomeContext);
 
   useEffect(() => {
@@ -18,14 +18,14 @@ function Teams() {
       headers: myHeaders,
     };
 
-    fetch(`https://v3.football.api-sports.io/teams?league=${leagueSelected}`, requestOptions)
+    fetch(`https://v3.football.api-sports.io/teams?league=${leagueSelected}&season=${seasonSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result.response);
         setTeamsInfo(result.response);
       });
     // setTeamsInfo(teamsMock.response);
-  }, [key, leagueSelected]);
+  }, [key, leagueSelected, seasonSelected]);
 
   const handleClickTeam = (teamId) => {
     setToRender('team-details');

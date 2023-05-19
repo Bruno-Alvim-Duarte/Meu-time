@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import LoginContext from '../context/LoginContext';
-import HomeContext from '../context/HomeContext';
+
 // import countriesMock from '../mocks/countries';
 
-function Countries() {
+function Countries(props) {
   const [countries, setCountries] = useState([]);
   const { key } = useContext(LoginContext);
   useEffect(() => {
@@ -23,24 +24,27 @@ function Countries() {
     // setCountries(countriesMock.response);
   }, [key]);
 
-  const { setToRender,
-    setTypeSelected, setCountryOrSeasonSelected } = useContext(HomeContext);
   const handleClickCountry = (country) => {
-    setToRender('leagues');
-    setCountryOrSeasonSelected(country);
-    setTypeSelected('country');
+    const { setCountryState } = props;
+    setCountryState(country);
   };
 
   return (
     <div>
       {countries.map((country) => (
-        <button key={ country.name } onClick={ () => handleClickCountry(country.name) }>
-          <img src={ country.flag } alt={ country.name } />
-          <p>{country.name}</p>
-        </button>
+        <div key={ country.name }>
+          <button onClick={ () => handleClickCountry(country.name) }>
+            <img src={ country.flag } alt={ country.name } />
+            <p>{country.name}</p>
+          </button>
+        </div>
       ))}
     </div>
   );
 }
+
+Countries.propTypes = {
+  setCountryState: PropTypes.func.isRequired,
+};
 
 export default Countries;

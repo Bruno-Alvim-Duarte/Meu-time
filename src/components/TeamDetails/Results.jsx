@@ -1,48 +1,47 @@
-import React, { useContext, useEffect, useState } from 'react';
-import LoginContext from '../../context/LoginContext';
-import HomeContext from '../../context/HomeContext';
+import React, { useEffect, useState } from 'react';
+// import resultsMock from '../../mocks/results';
+import PropTypes from 'prop-types';
 
-function Results() {
-  const [results, setResults] = useState([]);
-  const { key } = useContext(LoginContext);
-  const { seasonSelected, leagueSelected, teamSelected } = useContext(HomeContext);
+function Results(props) {
+  const [results, setResults] = useState({});
 
   useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append('x-rapidapi-key', key);
+    const { teamStatistics } = props;
+    setResults(teamStatistics.fixtures);
+    // setResults(resultsMock);
+  }, [props]);
 
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-    };
+  if (results.played) {
+    return (
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Total de jogos</th>
+              <th>Total de vitórias</th>
+              <th>Total de derrotas</th>
+              <th>Total de empates</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{results.played.total}</td>
+              <td>{results.wins.total}</td>
+              <td>{results.loses.total}</td>
+              <td>{results.draws.total}</td>
+            </tr>
+          </tbody>
 
-    fetch(`https://v3.football.api-sports.io/teams/statistics?season=${seasonSelected}&league=${leagueSelected}&team=${teamSelected}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result.response);
-        setResults(result.response.fixtures);
-      });
-  });
-
-  return (
-    <div>
-      <table>
-        <thead>
-          <th>Total de jogos</th>
-          <th>Total de vitórias</th>
-          <th>Total de derrotas</th>
-          <th>Total de empates</th>
-        </thead>
-        <tbody>
-          <td>{results.played.total}</td>
-          <td>{results.wins.total}</td>
-          <td>{results.loses.total}</td>
-          <td>{results.draws.total}</td>
-        </tbody>
-
-      </table>
-    </div>
-  );
+        </table>
+      </div>
+    );
+  }
 }
+
+Results.propTypes = {
+  teamStatistics: PropTypes.shape({
+    fixtures: PropTypes.shape({}).isRequired,
+  }).isRequired,
+};
 
 export default Results;

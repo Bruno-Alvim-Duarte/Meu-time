@@ -1,35 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import LoginContext from '../../context/LoginContext';
-import HomeContext from '../../context/HomeContext';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-function Lineups() {
-  const [lineupFrequent, setLineupFrequent] = useState([]);
-  const { key } = useContext(LoginContext);
-  const { teamSelected, seasonSelected, leagueSelected } = useContext(HomeContext);
+function Lineups(props) {
+  const [lineupFrequent, setLineupFrequent] = useState({});
 
   useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append('x-rapidapi-key', key);
+    const { teamStatistics } = props;
+    console.log(teamStatistics);
+    let lineup;
+    let played = 0;
+    teamStatistics.lineups.forEach((currLineup) => {
+      if (currLineup.played > played) {
+        played = currLineup.played;
+        lineup = currLineup;
+      }
+      setLineupFrequent(lineup);
+    });
 
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-    };
-    fetch(`https://v3.football.api-sports.io/teams/statistics?season=${seasonSelected}&league=${leagueSelected}&team=${teamSelected}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result.response);
-        let lineup;
-        let played = 0;
-        result.response.lineups.forEach((currLineup) => {
-          if (currLineup.played > played) {
-            played = currLineup.played;
-            lineup = currLineup;
-          }
-          setLineupFrequent(lineup);
-        });
-      });
-  }, [leagueSelected, seasonSelected, teamSelected, key]);
+    // setLineupFrequent(lineups);
+  }, [props]);
 
   return (
     <div>
@@ -43,5 +32,11 @@ function Lineups() {
     </div>
   );
 }
+
+Lineups.propTypes = {
+  teamStatistics: PropTypes.shape({
+    lineups: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
+  }).isRequired,
+};
 
 export default Lineups;

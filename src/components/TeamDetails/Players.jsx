@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import LoginContext from '../../context/LoginContext';
 import HomeContext from '../../context/HomeContext';
+// import players from '../../mocks/players';
 
 function Players() {
   const [playersInfo, setPlayersInfo] = useState([]);
@@ -19,9 +20,10 @@ function Players() {
     fetch(`https://v3.football.api-sports.io/players?team=${teamSelected}&season=${seasonSelected}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.response);
+        console.log(result);
         setPlayersInfo(result.response);
       });
+    // setPlayersInfo(players);
   }, [key, teamSelected, seasonSelected]);
 
   return (

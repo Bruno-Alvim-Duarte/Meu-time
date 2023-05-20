@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoginContext from '../context/LoginContext';
+import '../styles/Login.css';
 
 function Login() {
   const [key, setKey] = useState('');
@@ -35,21 +36,24 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <label htmlFor="key-input">
-        Key:
-      </label>
-      <input
-        type="text"
-        name="key-input"
-        id="key-input"
-        onChange={ ({ target }) => setKey(target.value) }
-        value={ key }
-      />
-      <button onClick={ handleSubmit }>
-        Entrar
-      </button>
+    <div className="login-page">
+      <div className="login-container">
+        <h1 className="login-page__header">Login</h1>
+        <label htmlFor="key-input">
+          Insira sua API Key:
+        </label>
+        <input
+          type="text"
+          name="key-input"
+          id="key-input"
+          className="login-page__text-field"
+          onChange={ ({ target }) => setKey(target.value) }
+          value={ key }
+        />
+        <button className="login-page__btn" onClick={ handleSubmit }>
+          Entrar
+        </button>
+      </div>
     </div>
   );
 }

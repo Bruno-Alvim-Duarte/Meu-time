@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import seasonsMock from '../mocks/seasons';
 import LoginContext from '../context/LoginContext';
+import '../styles/Seasons.css';
 
 function Seasons(props) {
   const [seasons, setSeasons] = useState([]);
@@ -23,14 +24,22 @@ function Seasons(props) {
     // setSeasons(seasonsMock.response);
   }, [key]);
 
-  const handleClickSeason = (season) => {
+  const handleClickSeason = (season, index) => {
     const { setSeasonState } = props;
     setSeasonState(season);
+    const seasonEl = document.querySelector(`.season-${index}`);
+    const someSelected = document.querySelector('.season-selected');
+    if (someSelected) someSelected.classList.remove('season-selected');
+    seasonEl.classList.add('season-selected');
   };
   return (
-    <div>
-      {seasons.map((season) => (
-        <button key={ season } onClick={ () => handleClickSeason(season) }>
+    <div className="season-list">
+      {seasons.map((season, index) => (
+        <button
+          className={ `season-button season-${index}` }
+          key={ season }
+          onClick={ () => handleClickSeason(season, index) }
+        >
           <p>{season}</p>
         </button>
       ))}

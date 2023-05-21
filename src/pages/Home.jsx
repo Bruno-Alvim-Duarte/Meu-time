@@ -8,6 +8,7 @@ import Leagues from '../components/Leagues';
 import Seasons from '../components/Seasons';
 import Teams from '../components/Teams';
 import TeamDetails from '../components/TeamDetails/TeamDetails';
+import '../styles/Home.css';
 
 function Home() {
   const [countryState, setCountryState] = useState('');
@@ -48,10 +49,13 @@ function Home() {
 
   if (toRender === 'countries') {
     return (
-      <div>
+      <div className="container">
+        <h1> Selecione um país e uma temporada </h1>
         <Countries setCountryState={ setCountryState } />
         <Seasons setSeasonState={ setSeasonState } />
-        <button onClick={ handleClickSubmit }> Submit </button>
+        <div className="submit-container">
+          <button className="submit" onClick={ handleClickSubmit }> Submit </button>
+        </div>
       </div>
     );
   }
